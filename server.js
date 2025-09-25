@@ -19,7 +19,7 @@ server.use(cookieParser());
 
 // allow frontend to send credentials (cookies)
 server.use(cors({
-    origin: "https://interview-master-five.vercel.app", // Next.js app
+    origin: "https://interview-master-nine.vercel.app", // Next.js app
     credentials: true,               // if you use cookies/auth
 }));
 
