@@ -1,5 +1,5 @@
 import express from 'express';
-import {PORT} from "./config/env.js";
+import {PORT, PRODUCTION_SERVER_URL_FRONTEND} from "./config/env.js";
 import {connectToDatabase} from "./database/mongodb.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware.js";
@@ -19,7 +19,7 @@ server.use(cookieParser());
 
 // allow frontend to send credentials (cookies)
 server.use(cors({
-    origin: "http://localhost:3000", // Next.js app
+    origin: PRODUCTION_SERVER_URL_FRONTEND, // Next.js app
     credentials: true,               // if you use cookies/auth
 }));
 
