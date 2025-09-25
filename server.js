@@ -1,5 +1,5 @@
 import express from 'express';
-import {PORT, PRODUCTION_SERVER_URL_FRONTEND} from "./config/env.js";
+import {PORT} from "./config/env.js";
 import {connectToDatabase} from "./database/mongodb.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware.js";
