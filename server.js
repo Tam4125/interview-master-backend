@@ -23,11 +23,11 @@ server.use(cors({
     credentials: true,               // if you use cookies/auth
 }));
 
-server.use('/api/v1/users', userRouter);
-server.use('/api/v1/auth', authRouter);
-server.use('/api/v1/vapi', vapiRouter);
-server.use('/api/v1/interviews', interviewRouter);
-server.use('/api/v1/feedbacks', feedbackRouter);
+server.use('/users', userRouter);
+server.use('/auth', authRouter);
+server.use('/vapi', vapiRouter);
+server.use('/interviews', interviewRouter);
+server.use('/feedbacks', feedbackRouter);
 
 server.use(errorMiddleware);
 
