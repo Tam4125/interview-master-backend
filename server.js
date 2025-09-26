@@ -1,5 +1,5 @@
 import express from 'express';
-import {PORT} from "./config/env.js";
+import {FRONT_END_SERVER, PORT} from "./config/env.js";
 import {connectToDatabase} from "./database/mongodb.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware.js";
@@ -19,8 +19,8 @@ server.use(cookieParser());
 
 // allow frontend to send credentials (cookies)
 server.use(cors({
-    origin: "https://interview-master-nine.vercel.app", // Next.js app
-    credentials: true,               // if you use cookies/auth
+    origin: FRONT_END_SERVER,
+    credentials: true,  // if you use cookies/auth
 }));
 
 server.use('/users', userRouter);
@@ -32,12 +32,12 @@ server.use('/feedbacks', feedbackRouter);
 server.use(errorMiddleware);
 
 server.get('/', (req, res) => {
-    res.send("Welcome to the Subscription Tracker API!");
+    res.send("Welcome to the InterviewMaster API!");
 });
 
 
 server.listen(PORT, async () => {
-    console.log(`Backend running on port http://localhost:${PORT}`);
+    console.log(`Backend is running`);
     await connectToDatabase();
 });
 

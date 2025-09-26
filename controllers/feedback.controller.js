@@ -2,6 +2,7 @@ import Feedback from "../models/feedback.model.js";
 import mongoose from "mongoose";
 import {GoogleGenAI} from "@google/genai";
 import {GOOGLE_GEMINI_API_KEY} from "../config/env.js";
+import Interview from "../models/interview.model.js";
 
 export const getFeedback = async (req, res, next) => {
     try {
@@ -29,12 +30,23 @@ export const createFeedback = async (req, res, next) => {
             return res.status(400).json({success:false, error: "Formatted Transcript not found"});
         }
 
+        const interview = await Interview.findById(interviewId);
+        if (!interview) {
+            return res.status(400).json({success:false, error: "Interview not found"});
+        }
+
         const ai = new GoogleGenAI({apiKey: GOOGLE_GEMINI_API_KEY});
         const {text: feedbackText} = await ai.models.generateContent({
             model: "gemini-2.0-flash",
             contents: `
             You are an AI interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
-            Transcript:
+            The interview Topic are:
+            The job role is ${interview.role}.
+            - The job experience level is ${interview.level}.
+            - The tech stack used in the job is: ${interview.techstack}.
+            - The focus between behavioural and technical questions should lean towards: ${interview.type}.
+            - The list of question: ${interview.questions}
+            The interview's transcript:
             ${formattedTranscript}
     
             Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
